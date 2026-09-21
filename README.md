@@ -54,6 +54,22 @@ pvz-portable/properties/
 
 Save data is written under `pvz-portable/savedata/` (created automatically).
 
+## Checkpoints
+
+A trained recurrent-PPO agent (the endless champion: mean 49.7 / median 50.5 absolute waves at
+3000 sun under its training deck, and 72.1 mean with a coffee-deck swap) is hosted at
+<https://huggingface.co/awtrisk/pvz-rl-agent>. It's a single `{"agent_state": state_dict}`
+payload for `network.PvZActorCritic`:
+
+```python
+import torch
+from network import PvZActorCritic
+
+agent = PvZActorCritic()
+agent.load_state_dict(torch.load("pvz_endless_champion.pt", weights_only=True)["agent_state"])
+agent.eval()
+```
+
 ## Quickstart
 
 ```python
