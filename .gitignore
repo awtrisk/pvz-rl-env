@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+venv/
+
+# Engine build artifacts (never ship binaries)
+pvz-portable/build*/
+*.pyd
+*.so
+*.o
+
+# PopCap assets: bring your own, never commit
+main.pak
+properties/
+pvz-game/
+savedata/
+
+# Tooling / local
+.artifacts/
+.ruff_cache/
+.pi*/
+.clangd
+compile_commands.json
+*.pt
+*.log

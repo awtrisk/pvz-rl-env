@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Build engine + unit tests (ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential cmake ninja-build \
+            libogg-dev libjpeg-dev libopenmpt-dev libpng-dev \
+            libvorbis-dev libmpg123-dev libsdl2-dev python3-dev pybind11-dev
+
+      - name: Install Python dependencies
+        run: python -m pip install -e ".[build,cloud]"
+
+      - name: Build engine bridge
+        run: |
+          cmake -S pvz-portable -B pvz-portable/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+          cmake --build pvz-portable/build
+
+      - name: Import check (assets not required for import)
+        run: python -c "import sys; sys.path.insert(0, 'pvz-portable/build'); import pvz_env; print('pvz_env imports OK')"
+
+      # Asset-free test modules. Engine-booting tests
+      # (engine_semantics, env_contract, phase3_gym, phase4_network,
+      # phase5_ppo, pvz_env, teacher_data) need your own main.pak and
+      # properties/ and run locally via: python -m unittest discover -s tests
+      - name: Unit tests (no game assets)
+        run: |
+          python -m unittest \
+            tests.test_behavior_cloning \
+            tests.test_curriculum \
+            tests.test_endless_deck \
+            tests.test_teacher_data \
+            -v

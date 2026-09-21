@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pvz-rl"
+version = "0.1.0"
+description = "Gymnasium environment and recurrent-PPO stack for Plants vs. Zombies survival endless (bring your own game copy)"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+requires-python = ">=3.10"
+dependencies = [
+    "gymnasium>=1.3",
+    "numpy>=2.0",
+    "torch>=2.4",
+    "mambapy>=1.2",
+]
+
+[project.optional-dependencies]
+build = ["pybind11>=3.0"]
+cloud = ["modal>=1.0"]
+video = ["pillow", "imageio", "imageio-ffmpeg"]
+
+[tool.setuptools]
+py-modules = [
+    "behavior_cloning",
+    "curriculum",
+    "evaluation",
+    "network",
+    "ppo",
+    "pvz_portable_gym",
+    "teacher_data",
+    "teacher_policy",
+    "train_modal",
+    "vec_env",
+]
