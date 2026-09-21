@@ -301,7 +301,7 @@ class PvZActorCritic(nn.Module):
         """
         Run the full feature + memory pipeline on a sequence batch.
         spatial:   (B, L, 5, 9, 36)
-        global_vec:(B, L, 12)
+        global_vec:(B, L, GLOBAL_SIZE)
         returns:   (B, L, latent_dim)
         """
         B, L = spatial.shape[:2]
@@ -377,7 +377,7 @@ class PvZActorCritic(nn.Module):
         """
         Sample an action (or evaluate a given action) and return value estimate.
         spatial:     (B, L, 5, 9, 36)
-        global_vec:  (B, L, 12)
+        global_vec:  (B, L, GLOBAL_SIZE)
         action:      optional (B, L) long tensor to evaluate; takes precedence over deterministic.
         deterministic: select the masked argmax when no action is supplied.
 

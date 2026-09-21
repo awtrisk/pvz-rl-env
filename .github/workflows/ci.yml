@@ -41,9 +41,8 @@ jobs:
         run: python -c "import sys; sys.path.insert(0, 'pvz-portable/build'); import pvz_env; print('pvz_env imports OK')"
 
       # Asset-free test modules. Engine-booting tests
-      # (engine_semantics, env_contract, phase3_gym, phase4_network,
-      # phase5_ppo, pvz_env, teacher_data) need your own main.pak and
-      # properties/ and run locally via: python -m unittest discover -s tests
+      # (engine_semantics, env_contract, network, ppo) need your own main.pak
+      # and properties/ and run locally via: python -m unittest discover -s tests
       - name: Unit tests (no game assets)
         run: |
           python -m unittest \

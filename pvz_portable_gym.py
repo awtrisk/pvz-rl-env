@@ -30,7 +30,7 @@ Each step advances 100 engine frames (FRAMES_PER_STEP=100).
 
 Reward modes (constructor arg ``reward_mode``):
     "legacy" (default): the bridge's dense shaping reward. Kept for exact
-        comparability with every historical result in PROGRESS.md. Note the
+        comparability with results trained under the original dense objective. Note the
         clipped threat-potential term breaks potential-shaping telescoping,
         so this reward is NOT policy-invariant to the sparse objective.
     "sparse": max(absolute-wave advance, 0) + 1 on stage_complete - 1 on lost

@@ -1,8 +1,8 @@
 """
-Unit tests for Phase 4 neural network (network.py).
+Unit tests for the actor-critic network (network.py).
 
 Run from repo root:
-    python tests/test_phase4_network.py
+    python tests/test_network.py
 
 Requires:
     - torch

@@ -1,6 +1,6 @@
 """Regression tests for the corrected engine semantics (2026-09-07 audit).
 
-Covers the four Phase-1 engine fixes from RECOVERY_PLAN.md:
+Covers the corrected engine semantics from the 2026-09-07 audit:
 
 1. Lawnmowers exist (created on reset, rolled in within one step) and a lane's
    first leak triggers the mower instead of losing the episode.
@@ -10,7 +10,7 @@ Covers the four Phase-1 engine fixes from RECOVERY_PLAN.md:
    while recharging, back to 0.0 when ready.
 4. reset() drains the widget safe-delete list, so repeated resets do not leak
    one full board of entity pools per episode.
-5. Endless stage chaining (Phase 6): the stage boundary advances the live
+5. Endless stage chaining: the stage boundary advances the live
    board in place (plants/sun/seed bank persist, wave machine resets with
    stage-scaled difficulty) instead of terminating the episode.
 
