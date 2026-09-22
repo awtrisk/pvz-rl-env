@@ -94,6 +94,25 @@ print(f"fell at absolute wave {info['wave']}, stage {info['stage']}")
 
 A runnable version is at `examples/quickstart.py`.
 
+## Using your own algorithm
+
+The env is plain Gymnasium — nothing from this repo's training stack is required. Bring any
+framework (sb3-contrib, CleanRL, Tianshou, your own). Four things to know:
+
+1. **Legality mask**: `info["action_mask"]` is recomputed every step over the `Discrete(496)`
+   space. Use any masked-discrete method; unmasked agents will slam into illegal actions.
+2. **One engine per process**: the bridge holds a singleton `gLawnApp`, so vectorize with
+   subprocesses (gymnasium's `SubprocVecEnv`, or this repo's `vec_env.PvZVecEnv`), never
+   in-process lists.
+3. **Partial observability**: plant age, wave rhythm and shovel history are not in the frame —
+   go recurrent or frame-stack.
+4. **Reward**: start with `reward_mode="sparse"` (survival duration + stage bonuses). The dense
+   `"legacy"` shaping exists for comparability with historical runs and needs per-stage tuning.
+
+`examples/sb3_maskable_ppo.py` shows the full hookup with `sb3-contrib`'s `MaskablePPO`, and the
+[HuggingFace champion](https://huggingface.co/awtrisk/pvz-rl-agent) loads into any
+`network.PvZActorCritic` via its plain `agent_state` dict if you want a sparring partner.
+
 ## API
 
 ### `PvZGymEnv(render_mode=None, chdir=True, resdir="pvz-portable/", savedir="pvz-portable/savedata/", reward_mode="legacy", max_steps=2000, obs_version=1, deck=None)`

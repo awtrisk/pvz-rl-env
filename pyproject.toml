@@ -19,6 +19,7 @@ dependencies = [
 [project.optional-dependencies]
 build = ["pybind11>=3.0"]
 cloud = ["modal>=1.0"]
+sb3 = ["sb3-contrib>=2.3"]
 video = ["pillow", "imageio", "imageio-ffmpeg"]
 
 [tool.setuptools]
